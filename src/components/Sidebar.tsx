@@ -13,14 +13,14 @@ const Sidebar = () => {
 
   const Menus: Menu[] = [
     { title: 'Application', src: 'Chart_fill', path: '/' },
-    { title: 'Division', src: 'Chat', path: '/Drivers' },
+    { title: 'District', src: 'Chat', path: '/District' },
     { title: 'Region', src: 'folder', path: '/Region' },
     { title: 'Store ', src: 'Calendar',  path: '/Store' },
     // { title: 'Store ', src: 'Calendar',  path: '/Store' ,gap: true},
-    // { title: 'Search', src: 'Search',path: '/Drivers'  },
-    // { title: 'Analytics', src: 'Chart',path: '/Drivers'  },
-    // { title: 'Files ', src: 'Folder', gap: true ,path: '/Drivers' },
-    { title: 'Setting', src: 'Setting' ,path: '/Drivers' },
+    // { title: 'Search', src: 'Search',path: '/District'  },
+    // { title: 'Analytics', src: 'Chart',path: '/District'  },
+    // { title: 'Files ', src: 'Folder', gap: true ,path: '/District' },
+    // { title: 'Setting', src: 'Setting' ,path: '/District' },
   ];
 
   return (
@@ -38,13 +38,13 @@ const Sidebar = () => {
       />
       <div className="flex gap-x-4 items-center">
         <img
-          src="./src/assets/logo.png"
+          src="./src/assets/Logo.png"
           className={`cursor-pointer duration-500 ${
             open && 'rotate-[360deg]'
           }`}
         />
         <h1
-          className={`text-white origin-left font-medium text-xl duration-200 ${
+          className={`text-white origin-left font-medium text-xl duration-200  ${
             !open && 'scale-0'
           }`}
         >

@@ -1,15 +1,15 @@
 {
-  "users": [
+  "GetApplication": [
     {
-      "ApplicationId": 1,
-      "ApplicationName": "ChatHPT",
-      "DisplayText": "ChatHPT Pro",
-      "DisplayMessage": "ChatHPT Pro mess",
-      "ApplicationUrl": "https://ChatGPT.com",
-      "ApplicationDescription": "An AI language model that provides detailed responses and generates human-like text.",
-      "DisplayOrder": 1,
-      "SessionTimeOut": 30,
-      "Status": 1,
+      "applicationId": 1,
+      "applicationName": "ChatHPT",
+      "aisplayText": "ChatHPT Pro",
+      "aisplayMessage": "ChatHPT Pro mess",
+      "applicationUrl": "https://ChatGPT.com",
+      "applicationDescription": "An AI language model that provides detailed responses and generates human-like text.",
+      "displayOrder": 1,
+      "sessionTimeOut": 30,
+      "status": 1,
       "id": "7675"
     },
     {
@@ -145,80 +145,34 @@
       "SessionTimeOut": 1
     }
   ],
-  "Division": [
+  "GetDistrict": [
     {
-      "DivisionId": 1,
-      "DivisionName": "Division 1",
-      "Status": "Active",
-      "id": "2"
+      "districtName": "001",
+      "Status": "Active"
     },
     {
-      "DivisionId": 2,
-      "DivisionName": "Division 2",
-      "Status": "Active",
-      "id": "2"
+      "districtName": "002",
+      "Status": "Active"
     },
     {
-      "DivisionId": 3,
-      "DivisionName": "Division 3",
-      "Status": "Active",
-      "id": "aaa4"
-    },
-    {
-      "DivisionId": 4,
-      "DivisionName": "Division 4",
-      "Status": "Active",
-      "id": "aaa4"
-    },
-    {
-      "DivisionId": 5,
-      "DivisionName": "Division 5",
-      "Status": "Active",
-      "id": "aaa4"
-    },
-    {
-      "DivisionId": 6,
-      "DivisionName": "Division 6",
-      "Status": "Active",
-      "id": "aaa4"
+      "districtName": "003",
+      "Status": "Active"
     }
   ],
-  "Values": [
+  "DenyApplicationDistrict": [
     {
-      "AppID": 2,
-      "DivisionName": "Division 2",
-      "Status": "Inactive",
+      "applicationId": 2,
+      "districtName": "002",
+      "status": "Active",
+      "type": "District",
+      "denyStatus": true,
       "id": "2"
     },
     {
-      "AppID": 4,
-      "DivisionName": "Division 4",
-      "Status": "Active",
-      "id": "4"
-    },
-    {
-      "id": "1",
-      "AppID": 1,
-      "DivisionName": "Division 3",
-      "Status": "Active"
-    },
-    {
-      "id": "1",
-      "AppID": 3,
-      "DivisionName": "Division 1",
-      "Status": "Active"
-    },
-    {
-      "id": "1",
-      "AppID": 3,
-      "DivisionName": "Division 1",
-      "Status": "Active"
-    },
-    {
-      "id": "1",
-      "AppID": 3,
-      "DivisionName": "Division 4",
-      "Status": "Active"
+      "id": "3",
+      "applicationId": 1,
+      "districtName": "001",
+      "status": "Active"
     }
   ]
 }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import  nav from '../assets/menu.png'
 import  user from '../assets/user.png'
-import  logo from '../assets/logo.png'
+import  logo from '../assets/DG_Logo.png'
 
 
 const Header = () => {
@@ -19,7 +19,7 @@ const Header = () => {
     <nav>
     <div className='px-2  border-b-2 border-blue-600  flex flex-row justify-between items-center cursor-pointer'>
       <span></span>
-    <h3 className='text-lg text-gray-500 font-bold '>CO monitoring dashboard</h3>
+    <h3 className='text-lg text-gray-500 font-bold '></h3>
     <div className='flex justify-end mr-10  my-1'>
 <button onClick={dropdownLavel} id="dropdownHoverButton" data-dropdown-toggle="dropdownprofile" data-dropdown-trigger="hover" class="text-white" type="button">
 <img src={user} className='w-10 h-10  cursor-pointer'/>

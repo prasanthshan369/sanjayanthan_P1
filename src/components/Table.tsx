@@ -1,103 +1,195 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import  appConfig  from "../helpers/appconfig";
 
 interface Data {
     id: number;
-    ApplicationId: number;
-    ApplicationName: string;
-    ApplicationDescription: string;
-    DisplayText: string;
-    DisplayMessage: string;
-    ApplicationUrl: string;
-    DisplayOrder: number;
-    SessionTimeOut: number;
-    Status: number;
+    applicationId: number;
+    applicationName: string;
+    applicationDescription: string;
+    displayText: string;
+    displayMessage: string;
+    applicationUrl: string;
+    displayOrder: number;
+    sessionTimeOut: number;
+    status: number;
 }
 
 const Table: React.FC = () => {
     const [appName, setAppName] = useState("");
     const [appDescription, setAppDescription] = useState("");
-    const [displaytext, setDisplaytext] = useState("");
+    const [displayText, setDisplayText] = useState("");
     const [displayMessage, setDisplayMessage] = useState("");
     const [applicationUrl, setApplicationUrl] = useState("");
-    const [displayorder, setDisplayNumber] = useState(0);
+    const [displayOrder, setDisplayNumber] = useState(0);
     const [sessionTimeOut, setSessionTimeOut] = useState(0);
     const [appStatus, setAppStatus] = useState(0);
     const [newEntry, setNewEntry] = useState(false);
-    const [AppID, setAppID] = useState(0);
+    const [appID, setAppID] = useState(0);
     const [editId, setEditId] = useState(-1);
-    const [Datas, setDatas] = useState<Data[]>([]);
+    const [datas, setDatas] = useState<Data[]>([]);
 
     useEffect(() => {
         getDatas();
     }, [editId]);
 
+    
+
     const getDatas = async () => {
-        axios.get<Data[]>("http://localhost:3001/users").then((res) => {
-            console.log(res.data);
-            setDatas(res.data);
-        });
+        // alert(editId)
+
+        // axios.get<Data[]>("http://localhost:3001/users")
+        // .then((res) => {
+        //     console.log(res.data);
+        //     setDatas(res.data);
+        // })
+        // .catch((error) => { 
+        //     console.error("There was an error!", error);
+        // }) 
+        
+        // alert(`${appConfig.appUrl}/GetApplication`);
+        
+         axios.get<Data[]>(`${appConfig.appUrl}/GetApplication`, {
+
+            // headers: {
+            //   "X-DG-AppToken": appConfig.appToken
+            // }
+        })
+        .then((res) => {
+            console.log('users',res.data);
+            setDatas(res.data);            
+        })
+        .catch((error) => { 
+            console.error("There was an error!", error);
+        })
     };
 
     const handleUpdate = (id: number) => {
         setEditId(id);
-        var val = Datas.filter((item, index) => item.ApplicationId === id);
+        var val = datas.filter((item, index) => item.applicationId === id);
         console.log("sanjay");
         console.log(val);
         setNewEntry(false);
-        setAppName(val[0].ApplicationName);
-        setAppDescription(val[0].ApplicationDescription);
-        setDisplaytext(val[0].DisplayText);
-        setDisplayMessage(val[0].DisplayMessage);
-        setApplicationUrl(val[0].ApplicationUrl);
-        setDisplayNumber(val[0].DisplayOrder);
-        setSessionTimeOut(val[0].SessionTimeOut);
-        setAppStatus(val[0].Status);
-        setAppID(val[0].ApplicationId);
+        setAppName(val[0].applicationName);
+        setAppDescription(val[0].applicationDescription);
+        setDisplayText(val[0].displayText);
+        setDisplayMessage(val[0].displayMessage);
+        setApplicationUrl(val[0].applicationUrl);
+        setDisplayNumber(val[0].displayOrder);
+        setSessionTimeOut(val[0].sessionTimeOut);
+        setAppStatus(val[0].status);
+        setAppID(val[0].applicationId);
     };
 
-    const handleUpdated = () => { 
+    const handleUpdated = async () => { 
         if (newEntry) {
-            axios.post("http://localhost:3001/users", {
-                ApplicationId: Datas.length + 1,
-                ApplicationName: appName,
-                ApplicationDescription: appDescription,
-                Status: appStatus,
-                DisplayText: displaytext,
-                DisplayMessage: displayMessage,
-                ApplicationUrl: applicationUrl,
-                DisplayOrder: parseInt(displayorder),
-                SessionTimeOut: parseInt(sessionTimeOut),
-            })
-            .then((res) => {
+            const addData: Data = {
+                id: 0,
+                applicationId: 0,
+                applicationName: appName,
+                applicationDescription: appDescription,
+                displayText: displayText,
+                displayMessage: displayMessage,
+                applicationUrl: applicationUrl,
+                displayOrder: displayOrder,
+                sessionTimeOut: sessionTimeOut,
+                status: appStatus,
+              };
+            //  const url="http://localhost:3001/users";
+              const url=`${appConfig.appUrl}/PostApplication`;              
+             alert(url + addData);
+            // axios.post(url, addData)
+
+              axios.post(url, addData, {
+                headers: {
+                  "X-DG-AppToken": appConfig.appToken
+                }
+              })
+              .then((res) => {
                 console.log(res, "red----");
-            });
-            console.log(Datas);
+              })
+              .catch((error) => {
+                console.error("There was an error at post add!",error);
+              });
+              
+
+            
+            // axios.post(`${appConfig.appUrl}/PostApplication`, {
+            //     applicationId: 0,
+            //     applicationName: appName,
+            //     displayText: displayText,
+            //     displayMessage: displayMessage,
+            //     applicationUrl: applicationUrl,
+            //     applicationDescription: appDescription,   
+            //     displayOrder: displayOrder,
+            //     sessionTimeOut: sessionTimeOut,
+            //     status: appStatus,
+            //   }, {
+            //     headers: {
+            //       "X-DG-AppToken": appConfig.appToken
+            //     }
+            //   })
+                
+             
+
+            console.log(datas);
             setEditId(-1);
             setNewEntry(false);
         } else {
-            alert("in");
-            console.log("editId is " + editId);
-            console.log(Datas);
-            var val = Datas.filter((item, index) => item.ApplicationId === editId);
-            console.log("sanjay api");
+           // alert("in");
+            //console.log("editId is " + editId);
+           // console.log(datas);
+            var val = datas.filter((item, index) => item.applicationId === editId);
             console.log(val);
-            alert(val);
-            axios.put("http://localhost:3001/users/" + val[0].id, {
-                ApplicationId: AppID,
-                ApplicationName: appName,
-                DisplayText: displaytext,
-                DisplayMessage: displayMessage,
-                ApplicationUrl: applicationUrl,
-                ApplicationDescription: appDescription,
-                DisplayOrder: displayorder.toString(),
-                SessionTimeOut: parseInt(sessionTimeOut),
-                Status: appStatus,
-            })
-            .then((res) => {
-                console.log(res);
-            });
-            setEditId(-1);
+           // alert(val);
+
+            // axios.put("http://localhost:3001/users/" + val[0].id, {
+            //     ApplicationId: appID,
+            //     ApplicationName: appName,
+            //     DisplayText: displayText,
+            //     DisplayMessage: displayMessage,
+            //     ApplicationUrl: applicationUrl,
+            //     ApplicationDescription: appDescription,
+            //     DisplayOrder: displayOrder.toString(),
+            //     SessionTimeOut: sessionTimeOut,
+            //     Status: appStatus,
+            // })
+            // .then((res) => {
+            //     console.log(res);
+            // });
+
+            const upData: Data = {
+                id: val[0].id,
+                applicationId: appID,
+                applicationName: appName,
+                displayText: displayText,
+                displayMessage: displayMessage,
+                applicationUrl: applicationUrl,
+                applicationDescription: appDescription,
+                displayOrder: displayOrder,
+                sessionTimeOut: sessionTimeOut,
+                status: appStatus,
+            };
+
+                      
+            const url=`${appConfig.appUrl}/PostApplication`;              
+            
+           // axios.post(url, addData)
+
+             axios.post(url, upData, {
+               headers: {
+                 "X-DG-AppToken": appConfig.appToken
+               }
+             })
+             .then((res) => {
+               console.log(res, "red----");
+             })
+             .catch((error) => {
+               console.error("There was an error at post add!",error);
+             });
+             
+            setEditId(-2);
+            
             setNewEntry(false);
         }
     };
@@ -109,19 +201,19 @@ const Table: React.FC = () => {
         setNewEntry(true); 
         setAppName(""); 
         setAppDescription(""); 
-        setDisplaytext(""); 
+        setDisplayText(""); 
         setDisplayMessage(""); 
         setApplicationUrl(""); 
         setDisplayNumber(0); 
         setSessionTimeOut(0); 
         setAppStatus(0); 
-        setAppID(Datas.length + 1); 
+        setAppID(datas.length + 1); 
     };
 
 
 
     const handleDelete = (id: number) => {
-        var val = Datas.filter((item, index) => item.ApplicationId === id);
+        var val = datas.filter((item, index) => item.applicationId === id);
         axios.delete("http://localhost:3001/users/" + val[0].id).then((res) => {
             console.log(res);
             getDatas();
@@ -168,14 +260,14 @@ const Table: React.FC = () => {
                 </thead>
 
                 <tbody className="w-full  overflow-y-scroll">
-                    {Datas.map((item, index) =>
-                        item.ApplicationId === editId ? (
-                            <tr key={item.ApplicationId} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    {datas.map((item, index) =>
+                        item.applicationId === editId ? (
+                            <tr key={item.applicationId} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                 <td
                                     scope="row"
                                     className="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                                 >
-                                    {AppID}
+                                    {appID}
                                 </td>
                                 <td className="px-6 py-3">
                                     <input
@@ -192,9 +284,9 @@ const Table: React.FC = () => {
                                 <td className="px-6 py-3">
                                     <input
                                         type="text"
-                                        value={displaytext}
+                                        value={displayText}
                                         onChange={(e) => {
-                                            setDisplaytext(e.target.value);
+                                            setDisplayText(e.target.value);
                                         }}
                                         id="first_name2"
                                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -235,7 +327,7 @@ const Table: React.FC = () => {
                                     <input
                                         type="number"
                                         id="first_name6"
-                                        value={displayorder}
+                                        value={displayOrder}
                                         onChange={(e) => setDisplayNumber(parseInt(e.target.value))}
                                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         required
@@ -279,27 +371,27 @@ const Table: React.FC = () => {
                                     scope="row"
                                     className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                                 >
-                                    {item.ApplicationId}
+                                    {item.applicationId}
                                 </th>
-                                <td className="px-6 py-4">{item.ApplicationName}</td>
-                                <td className="px-6 py-4">{item.DisplayText}</td>
-                                <td className="px-6 py-4">{item.DisplayMessage}</td>
-                                <td className="px-6 py-4">{item.ApplicationUrl}</td>
-                                <td className="px-6 py-4">{item.ApplicationDescription}</td>
-                                <td className="px-6 py-4">{item.DisplayOrder}</td>
-                                <td className="px-6 py-4">{item.SessionTimeOut}</td>
+                                <td className="px-6 py-4">{item.applicationName}</td>
+                                <td className="px-6 py-4">{item.displayText}</td>
+                                <td className="px-6 py-4">{item.displayMessage}</td>
+                                <td className="px-6 py-4">{item.applicationUrl}</td>
+                                <td className="px-6 py-4">{item.applicationDescription}</td>
+                                <td className="px-6 py-4">{item.displayOrder}</td>
+                                <td className="px-6 py-4">{item.sessionTimeOut}</td>
                                 <td className="px-6 py-4">
                                     <input
                                         type="checkbox"
                                         id="first_name9"
-                                        checked={item.Status === 1}
+                                        checked={item.status === 1}
                                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     />
                                 </td>
                                 <td className="px-6 py-4 text-right flex items-center">
                                     <button
                                         onClick={() => {
-                                            handleUpdate(item.ApplicationId);
+                                            handleUpdate(item.applicationId);
                                         }}
                                         className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                                     >
