@@ -1,8 +1,4 @@
-import React, { useEffect, useState } from 'react'
-import  nav from '../assets/menu.png'
-import  user from '../assets/user.png'
-import  logo from '../assets/DG_Logo.png'
-
+import Link from "next/link"
 
 const Header = () => {
   
@@ -22,7 +18,9 @@ const Header = () => {
     <h3 className='text-lg text-gray-500 font-bold '></h3>
     <div className='flex justify-end mr-10  my-1'>
 <button onClick={dropdownLavel} id="dropdownHoverButton" data-dropdown-toggle="dropdownprofile" data-dropdown-trigger="hover" class="text-white" type="button">
-<img src={user} className='w-10 h-10  cursor-pointer'/>
+  <Link href='/'>
+<img src={"/assets/user.png"} className='w-10 h-10  cursor-pointer'/>
+</Link>
 </button>
 
 <div id="dropdownprofile" style={{marginTop:'1rem',marginLeft:'3rem',width:'200px'}} class=" hidden bg-white divide-y divide-gray-100 rounded-lg shadow  ">

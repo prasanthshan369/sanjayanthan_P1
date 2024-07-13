@@ -36,8 +36,7 @@ const Table: React.FC = () => {
     
 
     const getDatas = async () => {
-        // alert(editId)
-
+       // alert(editId)
         // axios.get<Data[]>("http://localhost:3001/users")
         // .then((res) => {
         //     console.log(res.data);
@@ -47,16 +46,16 @@ const Table: React.FC = () => {
         //     console.error("There was an error!", error);
         // }) 
         
-        // alert(`${appConfig.appUrl}/GetApplication`);
+        //alert(`${appConfig.appUrl}/GetApplication`);
         
          axios.get<Data[]>(`${appConfig.appUrl}/GetApplication`, {
 
-            // headers: {
-            //   "X-DG-AppToken": appConfig.appToken
-            // }
+            headers: {
+              "X-DG-AppToken": appConfig.appToken
+            }
         })
         .then((res) => {
-            console.log('users',res.data);
+            console.log(res.data);
             setDatas(res.data);            
         })
         .catch((error) => { 
@@ -220,7 +219,7 @@ const Table: React.FC = () => {
         });
     };
 
-    return (<div> <button onClick={handleNewEntry} type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-md text-sm w-full sm:w-auto px-5 py-1 my-2 ml-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" > Add New </button>
+    return (<div> <button onClick={handleNewEntry} type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-md text-sm w-full sm:w-auto px-5 py-1 my-2 ml-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" > Add Application </button>
 
         <div className=" w-full mt-1 max-h-[470px] overflow-auto shadow-md sm:rounded-lg">
             <table className="w-full  text-xs text-left rtl:text-right text-gray-500 dark:text-gray-400 border-collapse">

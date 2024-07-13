@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+"use client"
+import Link from 'next/link';
+import React, { useEffect, useState } from 'react';
 
 interface Menu {
   title: string;
@@ -10,17 +11,15 @@ interface Menu {
 
 const Sidebar = () => {
   const [open, setOpen] = useState<boolean>(true);
+useEffect(()=>{
+console.log(window.location.pathname );
 
+},[window.location.pathname ])
   const Menus: Menu[] = [
-    { title: 'Application', src: 'Chart_fill', path: '/' },
-    { title: 'District', src: 'Chat', path: '/District' },
-    { title: 'Region', src: 'folder', path: '/Region' },
-    { title: 'Store ', src: 'Calendar',  path: '/Store' },
-    // { title: 'Store ', src: 'Calendar',  path: '/Store' ,gap: true},
-    // { title: 'Search', src: 'Search',path: '/District'  },
-    // { title: 'Analytics', src: 'Chart',path: '/District'  },
-    // { title: 'Files ', src: 'Folder', gap: true ,path: '/District' },
-    // { title: 'Setting', src: 'Setting' ,path: '/District' },
+    { title: 'Application', src: 'Chart_fill', path: '/application' },
+    { title: 'District', src: 'Chat', path: '/district' },
+    { title: 'Region', src: 'folder', path: '/region' },
+    { title: 'Store ', src: 'Calendar',  path: '/store' },
   ];
 
   return (
@@ -28,20 +27,18 @@ const Sidebar = () => {
     <div
       className={` ${
         open ? 'w-72' : 'w-20'
-      } bg-dark-purple h-screen p-5  pt-8 relative duration-300 mr-3`}
+      } bg-blue-700 h-screen p-5  pt-8 relative duration-300 mr-3`}
     >
       <img
-        src="./src/assets/control.png"
+        src="/assets/control.png"
         className={`absolute cursor-pointer -right-3 top-9 w-7 border-dark-purple
          border-2 rounded-full  ${!open && 'rotate-180'}`}
         onClick={() => setOpen(!open)}
       />
-      <div className="flex gap-x-4 items-center">
+      <div className="flex gap-x-4 items-center ">
         <img
-          src="./src/assets/Logo.png"
-          className={`cursor-pointer duration-500 ${
-            open && 'rotate-[360deg]'
-          }`}
+          src="/assets/DG_Logo.png"
+          className={` w-10 cursor-pointer duration-500 `}
         />
         <h1
           className={`text-white origin-left font-medium text-xl duration-200  ${
@@ -55,14 +52,14 @@ const Sidebar = () => {
         {Menus.map((Menu, index) => (
           <li key={index}>
             <Link
-              to={Menu.path}
+              href={Menu.path}
               className={`flex  rounded-md p-2 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4 
-              ${Menu.gap ? 'mt-9' : 'mt-2'} ${
-                index === 0 && 'bg-light-white'
-              } `}
+              ${Menu.gap ? 'mt-9' : 'mt-2'} 
+              ${window.location.pathname == Menu.path ? 'bg-white' : 'bg-transparent'}`}
             >
-              <img src={`./src/assets/${Menu.src}.png`} />
-              <span className={`${!open && 'hidden'} origin-left duration-200`}>
+
+              <img src={`/assets/${Menu.src}.png`} />
+              <span className={`${!open && 'hidden'} origin-left duration-200  ${window.location.pathname == Menu.path ? 'text-blue-700 font-bold' : ''}`}>
                 {Menu.title}
               </span>
             </Link>
